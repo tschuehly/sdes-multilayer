@@ -23,9 +23,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import org.springframework.data.repository.CrudRepository;
 import software.xdev.spring.data.eclipse.store.repository.config.EnableEclipseStoreRepositories;
 
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,11 +36,14 @@ public class DemoApplication implements CommandLineRunner
 {
 	private static final Logger LOG = LoggerFactory.getLogger(DemoApplication.class);
 	private final DataItemRepository repository;
+	private final GenericDataItemRepository<IntegerDataItem> genericDataItemRepository;
 	
-	public DemoApplication(final DataItemRepository repository)
+	public DemoApplication(final DataItemRepository repository,
+      GenericDataItemRepository<IntegerDataItem> genericDataItemRepository)
 	{
 		this.repository = repository;
-	}
+    this.genericDataItemRepository = genericDataItemRepository;
+  }
 	
 	public static void main(final String[] args)
 	{
@@ -53,6 +56,12 @@ public class DemoApplication implements CommandLineRunner
 	{
 		UUID newRandomUUID = UUID.randomUUID();
 
+		extracted(newRandomUUID);
+
+		get(UUID.randomUUID());
+	}
+
+	private void extracted(UUID newRandomUUID) {
 		if(this.repository.findById(IntegerDataItem.class).isEmpty())
 		{
 			DataItemList<IntegerDataItem> dataItemList = new DataItemList(IntegerDataItem.class);
@@ -67,6 +76,19 @@ public class DemoApplication implements CommandLineRunner
 			itemList.findById(newRandomUUID).ifPresent( item ->
 				System.out.println("Found item: " + item.getId())
 			);
+		});
+	}
+
+	private void get(UUID newRandomUUID) {
+		if(genericDataItemRepository.findById(newRandomUUID).isEmpty())
+		{
+			genericDataItemRepository.save(new IntegerDataItem(newRandomUUID, 5));
+		}
+
+		Optional<IntegerDataItem> byId = genericDataItemRepository.findById(newRandomUUID);
+		byId.ifPresent(itemList ->
+		{
+			System.out.println("found dataitem: " + itemList.getValue());
 		});
 	}
 }
