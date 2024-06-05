@@ -1,0 +1,21 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="DemoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <module name="talk-spring-data-eclipse-store-demo" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="software.xdev.spring.data.eclipse.store.demo.simple.DemoApplication" />
+    <option name="VM_PARAMETERS" value="--add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/jdk.internal.misc=ALL-UNNAMED" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="software.xdev.spring.data.eclipse.store.demo.simple.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+      <option name="credential" />
+      <option name="region" />
+      <option name="useCurrentConnection" value="false" />
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
